@@ -17,10 +17,13 @@ $lista_regiao = $query->fetchAll();
 
 <head>
   <meta charset="utf-8">
-  <title>Bem-vindo!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <title>Área do Administrador</title>
 </head>
-<body>
-				
+
+<body class="text-center" style="background-color: #f5f5f0;">
+
   <?php
   if (isset($_SESSION['msg'])) {
     echo $_SESSION['msg'];
@@ -29,77 +32,54 @@ $lista_regiao = $query->fetchAll();
 
   if (isset($registro)) {
     $acao = "manCidade.php?acao=atualizar&id="
-    . $registro['id_cidade'];
-    } else {
+      . $registro['id_cidade'];
+  } else {
     $acao = "manCidade.php?acao=create";
   }
   ?>
 
-<div class="intro-content display-table">
-   		<div class="table-cell">
-     		<div class="container">
+  <div id="cadCidade" class="alert alert-success" style="display: none;">
+    Cidade gravada com Sucesso
+  </div>
 
-             <div id="cadCidade" class="alert alert-success" style="display: none;">
-                Álbum Gravado com Sucesso
-            </div>
+  <?php
+  if (isset($registro)) {
+    $acao = "manCidade.php?acao=atualizar&id="
+      . $registro['id'];
+  } else {
+    $acao = "manCidade.php?acao=create";
+  }
+  ?>
+  <div class="container col-md-5" style="margin-top: 70px; ">
+    <form action="<?= $acao; ?>" id="formulario" method="POST">
+      <h1 class="h3 mb-3 font-weight-normal">Cadastrar Cidade</h1>
 
-				<?php
-				if (isset($registro)) {
-				$acao = "manCidade.php?acao=atualizar&id="
-					. $registro['id'];
-				} else {
-				$acao = "manCidade.php?acao=create";
-				}
-				?>
+      <div class="form-group">
+        <label>Nome</label>
+        <input type="text" class="form-control form-control-lg" id="nome" name="nome" placeholder="Nome" maxlength="100" required autofocus value="<?php if (isset($registro))  echo $registro['nome']; ?>">
+      </div>
 
-				<form class="contactForm" action="<?= $acao; ?>" id="formulario" class="contact-form php-mail-form" method="POST" role="form" enctype="multipart/form-data">
-					<div id="errormessage"></div>
-					<div class="row">
-						<div class="col-md-10 mb-10">
+      <div class="form-group">
+        <label>População</label>
+        <input type="number" class="form-control form-control-lg" id="populacao" name="populacao" placeholder="População" maxlength="100" required value="<?php if (isset($registro))  echo $registro['populacao']; ?>">
+      </div>
 
-							<label>Nome</label>
-							<div class="form-group">
-								<input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="<?php if (isset($registro))  echo $registro['nome']; ?>">
-								<div class="validate"></div>
-              </div>
+      <label>Selecione a região:</label>
+      <select class="form-control form-control-lg" name="id_regiao">
+        <?php foreach ($lista_regiao as $regiao) : ?>
+          <?php $id = $regiao['id_regiao'] ?>
+          <option class="text-black" value="<?php echo $regiao['id_regiao']; ?>">
+            <?php echo "Região " ?>
+            <?php echo $regiao['nome']; ?>
+          </option>
+        <?php endforeach ?>
+      </select>
+      <br>
 
-              <label>População</label>
-							<div class="form-group">
-								<input type="text" class="form-control" id="populacao" name="populacao" placeholder="População" value="<?php if (isset($registro))  echo $registro['populacao']; ?>">
-								<div class="validate"></div>
-              </div>
+      <input class="btn btn-lg btn-primary btn-block" type="submit" value="Cadastrar">
+      <a href="index.php" class="btn btn-secondary btn-lg btn-block">Cancelar</a>
 
-              <label>Selecione o álbum que a foto ficará:</label>
-              <div class="col-md-10 mb-10">
-                <div class="form-group">
-                  <select class="form-control" name="id_regiao">
-                    
-                  <?php foreach ($lista_regiao as $regiao) : ?>
-                    <?php $id = $regiao['id_regiao'] ?>
-
-                      <option class="text-black" value="<?php echo $regiao['id_regiao']; ?>">   
-                        <?php echo "Região " ?>	
-                        <?php echo $regiao['nome']; ?>
-                      </option>
-                  <?php endforeach ?>
-
-                </div>
-              </div>
-						</div>
-						<br>
-						
-          </div>
-          <input type="submit" value="Cadastrar">
-					
-
-					<a href="index.php" class="btn btn-secondary">Cancelar</a>
-				</form>
-         	</div>
-      	</div>
-    </div>
-
-	<script src="lib/js/bootstrap.bundle.min.js"></script>
-
-
+    </form>
+  </div>
 </body>
 </html>

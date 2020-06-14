@@ -6,67 +6,39 @@
     session_destroy();
   }
 
-  require_once('./banco/conexao.php');
-  if(isset($_POST['usuario']) && isset($_POST['senha'])){
-      
-    $usuario = $_POST['usuario'];
-    $senha = md5($_POST['senha']);
-        
-    $sql = $con->prepare("SELECT count(*) as qtd FROM usuario WHERE usuario=:usuario AND senha= :senha");
-    $sql->execute(array("usuario" => $usuario  , "senha" => md5($_POST['senha'])));
-    $result = $sql->fetch(PDO::FETCH_ASSOC);
-    
-
-    if($result['qtd']==1){
-      $_SESSION['autenticado'] = $usuario; 
-      $_SESSION['dados'] = ["dados"=> $result]; // pega todos os dados do user e joga na sessao dados
-      header('Location: ./admin/index.php');
-    }else{
-      $mensagem = "Usuário/Senha Incorretos";
-    }
-  }
 ?>
 <!DOCTYPE html>
 <html lang="pt">
 
 <head>
   <meta charset="utf-8">
-  <title>Bem-vindo!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <title>Login</title>
 </head>
 
-<body>
+<body class="text-center" style="background-color: #f5f5f0;">
 <div>
   <?php if (isset($mensagem)) { ?>
     <div class="alert alert-danger" role="alert">
     <?= $mensagem; ?>
   </div>
   <?php } ?>
-
-  <form action="./banco/verifica.php" method="POST">
-
-    <div>
-      <div>
-        <label>Usuário</label>
-      </div>
-      <input type="text" name="usuario" id="inputUsuario" placeholder="Usuario"  required autofocus>
-    </div>
-
-    <div>
-      <div>
-        <label>Senha</label>
-      </div>
-      <input type="password" name="senha" id="inputSenha" placeholder="Senha" required>
-    </div>
-
-    <button type="submit">Acessar</button>
-    <a href="index.php" type="button" class="btn btn-secondary btn-lg btn-block">Cancelar</a>
-    <br>
-  </form>
-</div>
-
-<!--  bootstrap  -->
-  <script src="lib/js/bootstrap.min.js"></script>
+  <div class="container col-md-3" style="margin-top: 70px;">
+    <form class="form-signin" action="./banco/verifica.php" method="POST">
+      <img class="mb-4" src="logo-upf.png" alt="" width="170" height="120">
+      <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+        <label for="inputEmail" class="sr-only">Usuário</label>
+        <input class="form-control" type="text" name="usuario" id="inputUsuario" placeholder="Usuario"  required autofocus>
+        <br>
+        <label for="inputPassword" class="sr-only">Senha</label>
+        <input class="form-control" type="password" name="senha" id="inputSenha" placeholder="Senha" required>
+        <br>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Acessar</button>
+      <a href="index.php" type="button" class="btn btn-secondary btn-lg btn-block">Cancelar</a>
+      <br>
+    </form>
+  </div>
 
 </body>
-
 </html>
