@@ -61,7 +61,7 @@ $lista_regiao = $query->fetchAll();
 
       <div class="form-group">
         <label>População</label>
-        <input type="number" class="form-control form-control-lg" id="populacao" name="populacao" placeholder="População" maxlength="100" required value="<?php if (isset($registro))  echo $registro['populacao']; ?>">
+        <input type="number" class="form-control form-control-lg" id="populacao" name="populacao" placeholder="População" maxlength="10" required value="<?php if (isset($registro))  echo $registro['populacao']; ?>">
       </div>
 
       <label>Selecione a região:</label>

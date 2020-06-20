@@ -43,12 +43,12 @@ $lista_regiao = $query->fetchAll();
 
       <div class="form-group">
         <label>Nome</label>
-        <input type="text" class="form-control form-control-lg" name="nome" required autofocus value="<?php if (isset($registro)) echo $registro['nome']; ?>"> <br>
+        <input type="text" class="form-control form-control-lg" name="nome" maxlength="100" required autofocus value="<?php if (isset($registro)) echo $registro['nome']; ?>"> <br>
       </div>
 
       <div class="form-group">
         <label>População</label>
-        <input type="number" class="form-control form-control-lg" name="populacao" required value="<?php if (isset($registro)) echo $registro['populacao']; ?>"> <br>
+        <input type="number" class="form-control form-control-lg" name="populacao" maxlength="10" required value="<?php if (isset($registro)) echo $registro['populacao']; ?>"> <br>
       </div>
 
       <label>Selecione a região:</label>
